@@ -9,7 +9,7 @@ class ExercicioCard extends StatelessWidget {
 
   const ExercicioCard({super.key, required this.exercicio});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -35,12 +35,14 @@ class ExercicioCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.network(
-                      exercicio.urlimagem,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.image_not_supported, color: Colors.cyanAccent, size: 50),
-                    ),
+                    exercicio.imagemUrl != null
+                        ? Image.network(
+                            exercicio.imagemUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.image_not_supported, color: Colors.cyanAccent, size: 50),
+                          )
+                        : const Icon(Icons.image_not_supported, color: Colors.cyanAccent, size: 50),
                     Positioned(
                       top: 4,
                       right: 4,
@@ -83,5 +85,4 @@ class ExercicioCard extends StatelessWidget {
       ),
     );
   }
-
 }

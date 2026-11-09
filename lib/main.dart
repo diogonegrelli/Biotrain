@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/catalogo_provider.dart';
 import 'providers/favoritos_provider.dart';
+import 'providers/executados_provider.dart';
 import 'screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:somativo/screens/catalogo_screen.dart';
@@ -24,6 +25,10 @@ class MyApp extends StatelessWidget {
         
         ChangeNotifierProvider(
           create: (context) => FavoritosProvider(),
+          lazy: false, 
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExecutadosProvider(),
           lazy: false, 
         ),
       ],

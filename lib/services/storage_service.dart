@@ -12,9 +12,8 @@ class StorageService {
       return json.encode({
         'id': exercicio.id,
         'nome': exercicio.nome,
-        'idGrupoMuscular': exercicio.idGrupoMuscular,
         'descricao': exercicio.descricao,
-        'urlimagem': exercicio.urlimagem,
+        'urlimagem': exercicio.imagemUrl,
       });
     }).toList();
 
