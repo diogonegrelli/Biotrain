@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/exercicio.dart';
+import '../models/item.dart';
 import '../providers/favoritos_provider.dart';
 import '../providers/executados_provider.dart';
 
 class DetalhesItemScreen extends StatelessWidget {
-  final Exercicio exercicio;
+  final Item exercicio;
 
   const DetalhesItemScreen({super.key, required this.exercicio});
 
@@ -54,7 +54,7 @@ class DetalhesItemScreen extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
                     child: Image.network(
-                      exercicio.imagemUrl ?? '',
+                      exercicio.imagemUrl,
                       height: 350,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) => const SizedBox(

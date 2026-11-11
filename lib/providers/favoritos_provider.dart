@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/exercicio.dart';
+import '../models/item.dart';
 import '../services/storage_service.dart'; 
 
 class FavoritosProvider extends ChangeNotifier {
-  List<Exercicio> _favoritos = [];
-  List<Exercicio> get favoritos => _favoritos;
+  List<Item> _favoritos = [];
+  List<Item> get favoritos => _favoritos;
 
   final StorageService _storageService = StorageService();
 
@@ -12,15 +12,15 @@ class FavoritosProvider extends ChangeNotifier {
     _carregarFavoritos();
   }
 
-  bool isFavorito(Exercicio exercicio) {
-    return _favoritos.any((e) => e.id == exercicio.id);
+  bool isFavorito(Item item) {
+    return _favoritos.any((e) => e.id == item.id);
   }
 
-  void alternarFavorito(Exercicio exercicio) {
-    if (isFavorito(exercicio)) {
-      _favoritos.removeWhere((e) => e.id == exercicio.id);
+  void alternarFavorito(Item item) {
+    if (isFavorito(item)) {
+      _favoritos.removeWhere((e) => e.id == item.id);
     } else {
-      _favoritos.add(exercicio);
+      _favoritos.add(item);
     }
     
     notifyListeners();

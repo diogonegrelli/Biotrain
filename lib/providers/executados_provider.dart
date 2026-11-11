@@ -17,7 +17,7 @@ class ExecutadosProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleExecutado(String id) async {
+  Future<void> alternarExecutado(String id) async {
     final prefs = await SharedPreferences.getInstance();
     if (_executadosIds.contains(id)) {
       _executadosIds.remove(id);

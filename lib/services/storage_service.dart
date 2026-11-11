@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/exercicio.dart';
+import '../models/item.dart';
 
 class StorageService {
   static const String _chaveFavoritos = 'favoritos_aluno';
 
-  Future<void> salvarFavoritos(List<Exercicio> favoritos) async {
+  Future<void> salvarFavoritos(List<Item> favoritos) async {
     final prefs = await SharedPreferences.getInstance();
     
     List<String> listaStrings = favoritos.map((exercicio) {
@@ -20,7 +20,7 @@ class StorageService {
     await prefs.setStringList(_chaveFavoritos, listaStrings);
   }
 
-  Future<List<Exercicio>> carregarFavoritos() async {
+  Future<List<Item>> carregarFavoritos() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       
@@ -28,7 +28,7 @@ class StorageService {
 
       return listaStrings.map((texto) {
         final jsonMap = json.decode(texto);
-        return Exercicio.fromJson(jsonMap);
+        return Item.fromJson(jsonMap);
       }).toList();
     } catch (e) {
       // ignore: avoid_print

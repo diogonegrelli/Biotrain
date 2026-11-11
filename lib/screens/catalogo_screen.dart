@@ -103,7 +103,7 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
           Expanded(
             child: Consumer<CatalogoProvider>(
               builder: (context, catalogoProvider, child) {
-                if (catalogoProvider.temErro) {
+                if (catalogoProvider.erro) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +123,7 @@ class _CatalogoScreenState extends State<CatalogoScreen> {
                   );
                 }
 
-                if (catalogoProvider.exercicios.isEmpty && catalogoProvider.isCarregando) {
+                if (catalogoProvider.exercicios.isEmpty && catalogoProvider.carregando) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );

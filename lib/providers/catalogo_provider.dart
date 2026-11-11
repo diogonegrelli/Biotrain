@@ -1,51 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:somativo/models/exercicio.dart';
+import 'package:somativo/models/item.dart';
 import 'package:somativo/services/api_service.dart';
 
 class CatalogoProvider extends ChangeNotifier {
   final ApiService _apiService = ApiService();
 
   String? _proximaUrl;
-  final List<Exercicio> _exercicios = [];
-  List<Exercicio> _buscarExercicios = [];
+  final List<Item> _exercicios = [];
+  List<Item> _buscarExercicios = [];
   
-  bool _isCarregando = false;
-  bool _isCarregandoMais = false;
-  bool _temErro = false;
+  bool _carregando = false;
+  bool _carregandoMais = false;
+  bool _erro = false;
   String _mensagemErro = '';
 
-  List<Exercicio> get exercicios => _exercicios;
-  List<Exercicio> get buscarExercicios => _buscarExercicios;
-  bool get isCarregando => _isCarregando;
-  bool get isCarregandoMais => _isCarregandoMais;
-  bool get temErro => _temErro;
+  List<Item> get exercicios => _exercicios;
+  List<Item> get buscarExercicios => _buscarExercicios;
+  bool get carregando => _carregando;
+  bool get isCarregandoMais => _carregandoMais;
+  bool get erro => _erro;
   String get mensagemErro => _mensagemErro;
 
   Future<void> carregarExercicios() async {
-    if (_isCarregando || _isCarregandoMais || (_proximaUrl == null && _exercicios.isNotEmpty)) return;
+    if (_carregando || _carregandoMais || (_proximaUrl == null && _exercicios.isNotEmpty)) return;
 
     if (_exercicios.isEmpty) {
-      _isCarregando = true;
+      _carregando = true;
     } else {
-      _isCarregandoMais = true;
+      _carregandoMais = true;
     }
     
-    _temErro = false;
+    _erro = false;
     notifyListeners(); 
 
     try {
       final dataResult = await _apiService.getExercicios(nextUrl: _proximaUrl);
 
-      _exercicios.addAll(dataResult['exercicios'] as List<Exercicio>);
+      _exercicios.addAll(dataResult['exercicios'] as List<Item>);
       _proximaUrl = dataResult['nextUrl'] as String?;
       _buscarExercicios = List.from(_exercicios);
 
     } catch (e) {
-      _temErro = true;
+      _erro = true;
       _mensagemErro = 'Erro ao carregar exercícios.';
     } finally {
-      _isCarregando = false;
-      _isCarregandoMais = false;
+      _carregando = false;
+      _carregandoMais = false;
       notifyListeners();
     }
   }
@@ -56,18 +56,18 @@ class CatalogoProvider extends ChangeNotifier {
       return;
     }
 
-    _isCarregando = true;
-    _temErro = false;
+    _carregando = true;
+    _erro = false;
     notifyListeners();
 
     try {
-      final resultados = await _apiService.buscarExercicios(query);
+      final List<Item> resultados = await _apiService.buscarExercicios(query);
       _buscarExercicios = resultados;
     } catch (e) {
-      _temErro = true;
+      _erro = true;
       _mensagemErro = 'Erro ao buscar exercícios.';
     } finally {
-      _isCarregando = false;
+      _carregando = false;
       notifyListeners();
     }
   }
@@ -75,7 +75,7 @@ class CatalogoProvider extends ChangeNotifier {
   void atualizarBusca(String textoDigitado) {
     if (textoDigitado.isEmpty) {
       _buscarExercicios = List.from(_exercicios);
-      _temErro = false;
+      _erro = false;
       notifyListeners(); 
     }
   }
